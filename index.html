@@ -421,7 +421,7 @@ let rotation;
 
 const route=[
 [34.072461, 38.297858],
-[34.066377, 38.309159],
+[34.06546, 38.31022],
 [34.060479, 38.307818]
 ];
 
@@ -437,6 +437,38 @@ const saglikLabelGeoJSON = {
       },
       properties: {
         title: "Sağlık Kasabası"
+      }
+    }
+  ]
+};
+
+const saglikbelediyeLabelGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [34.07103, 38.301053]
+      },
+      properties: {
+        title: "Sağlık Belediyesi Binası"
+      }
+    }
+  ]
+};
+
+const shellLabelGeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [34.063368, 38.3101]
+      },
+      properties: {
+        title: "Shell Petrol İstasyonu"
       }
     }
   ]
@@ -573,6 +605,54 @@ map.addLayer({
   }
 });
 
+/* SAĞLIK BELEDİYESİ BİNASI LABEL */
+map.addSource("saglikbelediye-label", {
+  type: "geojson",
+  data: saglikbelediyeLabelGeoJSON
+});
+
+map.addLayer({
+  id: "saglikbelediye-label-layer",
+  type: "symbol",
+  source: "saglikbelediye-label",
+  layout: {
+    "text-field": ["get", "title"],
+    "text-size": 15,
+    "text-offset": [0, 1.5],
+    "text-anchor": "top"
+  },
+  paint: {
+  "text-color": "#FFF",
+  "text-halo-color": "rgba(0,0,0,0.9)",
+  "text-halo-width": 2,
+  "text-halo-blur": 0.8
+  }
+});
+
+/* SHELL PETROL İSTASYONU LABEL */
+map.addSource("shell-label", {
+  type: "geojson",
+  data: shellLabelGeoJSON
+});
+
+map.addLayer({
+  id: "shell-label-layer",
+  type: "symbol",
+  source: "shell-label",
+  layout: {
+    "text-field": ["get", "title"],
+    "text-size": 15,
+    "text-offset": [0, 1.5],
+    "text-anchor": "top"
+  },
+  paint: {
+  "text-color": "#FFF",
+  "text-halo-color": "rgba(0,0,0,0.9)",
+  "text-halo-width": 2,
+  "text-halo-blur": 0.8
+  }
+});
+
 
 setTimeout(() => {
   startSmoothRoute();
@@ -638,7 +718,7 @@ function startSmoothRoute() {
   const zoomElement = document.getElementById("zoom-level");
   if (zoomElement) zoomElement.classList.add("hide");
 
-  const totalDuration = 20000;
+  const totalDuration = 30000;
   const climbDuration = 4000;
   const targetPitch = 15;
 
